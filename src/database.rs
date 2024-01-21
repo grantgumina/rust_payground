@@ -1,17 +1,11 @@
+use std::env;
 use sqlx::sqlite::SqlitePool;
 
-pub fn connect() {
+#[tokio::main]
+pub async fn connect() -> Result<(), sqlx::Error> {
+    let db_url: String = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    //let db_url: String = env::var("DATABASE_URL");
+    let _pool: sqlx::Pool<sqlx::Sqlite> = SqlitePool::connect(&db_url).await?;
     println!("Connected to database");
-}
-
-pub fn insert() {
-    println!("Inserted data into database");
-}
-
-pub fn update() {
-    println!("Updated data in database");
-}
-
-pub fn delete() {
-    println!("Deleted data from database");
+    Ok(())
 }

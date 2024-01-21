@@ -1,6 +1,11 @@
 mod database;
+use dotenv;
 
 fn main() {
-    database::connect();
-    println!("Hello, world!");
+    dotenv::dotenv().ok();
+
+    match database::connect() {
+        Ok(_) => println!("Connected to database"),
+        Err(e) => println!("Failed to connect to database: {}", e),
+    }
 }
